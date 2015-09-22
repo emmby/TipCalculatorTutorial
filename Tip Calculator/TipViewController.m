@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *tipControl;
 
 - (IBAction)onTap:(id)sender;
+- (void)updateValues;
 @end
 
 @implementation TipViewController
@@ -41,5 +42,15 @@
 
 - (IBAction)onTap:(id)sender {
     [self.view endEditing:YES];
+    [self updateValues];
+}
+
+- (void)updateValues {
+    double billAmount = [self.billTextField.text doubleValue];
+    NSArray *tipValues = @[@(0.1), @(0.15), @(0.2)];
+    double tipAmount = [tipValues[self.tipControl.selectedSegmentIndex] doubleValue] * billAmount;
+    double totalAmount = tipAmount + billAmount;
+    self.tipLabel.text = [NSString stringWithFormat:@"%f", tipAmount];
+    self.totalLabel.text = [NSString stringWithFormat:@"%f", totalAmount];
 }
 @end
